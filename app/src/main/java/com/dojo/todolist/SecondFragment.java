@@ -36,13 +36,14 @@ public class SecondFragment extends Fragment {
 
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (savedInstanceState != null) {
             mEditing = savedInstanceState.getBoolean(EDITING_KEY);
         }
-        initViewModel();
+        initViewModel(SecondFragmentArgs.fromBundle(getArguments()).getId());
+
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +52,7 @@ public class SecondFragment extends Fragment {
         });
     }
 
-    private void initViewModel() {
+    private void initViewModel(int todoId) {
         mViewModel = ViewModelProviders.of(this)
                 .get(EditorViewModel.class);
 
@@ -64,15 +65,14 @@ public class SecondFragment extends Fragment {
             }
         });
         binding.toolbar.setTitle(getString(R.string.new_note));
-//        Bundle extras = getIntent().getExtras();
-//        if (extras == null) {
-//            binding.toolbar.setTitle(getString(R.string.new_note));
-//            mNewNote = true;
-//        } else {
-//            binding.toolbar.setTitle(getString(R.string.edit_note));
-//            int noteId = extras.getInt(NOTE_ID_KEY);
-//            mViewModel.loadData(noteId);
-//        }
+        if (todoId == 0) {
+            binding.toolbar.setTitle(getString(R.string.new_note));
+            mNewNote = true;
+        } else {
+            binding.toolbar.setTitle(getString(R.string.edit_note));
+            int noteId = todoId;
+            mViewModel.loadData(noteId);
+        }
     }
 
 

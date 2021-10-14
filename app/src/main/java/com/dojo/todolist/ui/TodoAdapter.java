@@ -7,7 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dojo.todolist.FirstFragment;
+import com.dojo.todolist.FirstFragmentDirections;
+import com.dojo.todolist.R;
 import com.dojo.todolist.database.TodoEntity;
 import com.dojo.todolist.databinding.TodoListItemBinding;
 
@@ -42,6 +48,10 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Called", Toast.LENGTH_SHORT).show();
+                FirstFragmentDirections.ActionFirstFragmentToSecondFragment action =
+                        FirstFragmentDirections.actionFirstFragmentToSecondFragment();
+                action.setId(todo.getId());
+                Navigation.findNavController(view).navigate(action);
             }
         });
 
