@@ -44,6 +44,17 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         final TodoEntity todo = mTodos.get(position);
         holder.todoListItemBinding.noteText.setText(todo.getTitle());
 
+        holder.todoListItemBinding.cardTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "Called", Toast.LENGTH_SHORT).show();
+                FirstFragmentDirections.ActionFirstFragmentToSecondFragment action =
+                        FirstFragmentDirections.actionFirstFragmentToSecondFragment();
+                action.setId(todo.getId());
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+
         holder.todoListItemBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

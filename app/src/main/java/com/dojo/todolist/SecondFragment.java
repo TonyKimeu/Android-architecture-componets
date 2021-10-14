@@ -5,11 +5,15 @@ import static com.dojo.todolist.Utils.Constants.NOTE_ID_KEY;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -44,10 +48,19 @@ public class SecondFragment extends Fragment {
         }
         initViewModel(SecondFragmentArgs.fromBundle(getArguments()).getId());
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveAndReturn();
+            }
+        });
+
+        binding.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.deleteNote();
+                NavHostFragment.findNavController(SecondFragment.this)
+                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
@@ -64,12 +77,12 @@ public class SecondFragment extends Fragment {
                 }
             }
         });
-        binding.toolbar.setTitle(getString(R.string.new_note));
+
         if (todoId == 0) {
-            binding.toolbar.setTitle(getString(R.string.new_note));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.new_note);
             mNewNote = true;
         } else {
-            binding.toolbar.setTitle(getString(R.string.edit_note));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.edit_note);
             int noteId = todoId;
             mViewModel.loadData(noteId);
         }
@@ -92,5 +105,7 @@ public class SecondFragment extends Fragment {
         outState.putBoolean(EDITING_KEY, true);
         super.onSaveInstanceState(outState);
     }
+
+
 
 }

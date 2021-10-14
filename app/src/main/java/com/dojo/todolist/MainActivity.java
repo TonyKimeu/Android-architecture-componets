@@ -7,6 +7,7 @@ import com.dojo.todolist.ui.TodoAdapter;
 import com.dojo.todolist.viewmodel.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ import android.view.View;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private List<TodoEntity> todoData = new ArrayList<>();
     private TodoAdapter mAdapter;
     private NavController navController;
+    private Boolean setMenuVisibility = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +57,20 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 navController.navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller,
+                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.FirstFragment) {
+                    binding.fab.setVisibility(View.VISIBLE);
+                    setMenuVisibility = true;
+                } else {
+                    binding.fab.setVisibility(View.GONE);
+                    setMenuVisibility = false;
+                }
             }
         });
     }
@@ -91,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
@@ -121,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        //Toast.makeText(MainActivity.this, "onSupportNavigateUp MainActivity", Toast.LENGTH_SHORT).show();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration);
 
