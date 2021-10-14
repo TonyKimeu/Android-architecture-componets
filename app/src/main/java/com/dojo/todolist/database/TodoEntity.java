@@ -27,13 +27,15 @@ public class TodoEntity {
         this.todoCompleted = todoCompleted;
         this.completed = completed;
     }
-
     @Ignore
-    public TodoEntity(String title, Date todoCompleted, Boolean completed) {
+    public TodoEntity(String title, Date todoCreated, Date todoCompleted, Boolean completed) {
         this.title = title;
+        this.todoCreated = todoCreated;
         this.todoCompleted = todoCompleted;
         this.completed = completed;
     }
+
+
 
     public int getId() {
         return id;
