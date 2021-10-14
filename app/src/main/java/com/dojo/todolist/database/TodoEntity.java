@@ -13,8 +13,8 @@ public class TodoEntity {
     private  int id;
     private String title;
     private Date todoCreated;
-    private Date todoCompleted;
-    private Boolean completed;
+    private Date todoCompleted = null;
+    private Boolean completed = false;
 
     @Ignore
     public TodoEntity() {
@@ -28,11 +28,9 @@ public class TodoEntity {
         this.completed = completed;
     }
     @Ignore
-    public TodoEntity(String title, Date todoCreated, Date todoCompleted, Boolean completed) {
+    public TodoEntity(String title, Date todoCreated) {
         this.title = title;
         this.todoCreated = todoCreated;
-        this.todoCompleted = todoCompleted;
-        this.completed = completed;
     }
 
 
