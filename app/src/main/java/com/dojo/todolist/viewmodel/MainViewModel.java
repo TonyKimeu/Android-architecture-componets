@@ -13,14 +13,14 @@ import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
 
-    public LiveData<List<TodoEntity>> mTodo;
+    public LiveData<List<TodoEntity>> mTodos;
     private TodoRepository mRepository;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = TodoRepository.getInstance(application.getApplicationContext());
-        mTodo = mRepository.mTodos;
+        mTodos = mRepository.mTodos;
     }
 
     public void addSampleData() {

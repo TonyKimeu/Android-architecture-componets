@@ -1,9 +1,11 @@
 package com.dojo.todolist;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,22 +31,28 @@ public class FirstFragment extends Fragment {
     private List<TodoEntity> todoData = new ArrayList<>();
     private TodoAdapter mAdapter;
     private MainViewModel mViewModel;
+    private LinearLayoutManager layoutManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Toast.makeText(getContext(), "onCreate", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
-
     }
 
+
+
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initRecyclerView();
         initViewModel();
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
@@ -57,9 +65,34 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void initViewModel() {
@@ -71,7 +104,7 @@ public class FirstFragment extends Fragment {
                         todoData.clear();
                         todoData.addAll(noteEntities);
 
-                        if (mAdapter == null) {
+                        if (mAdapter == null || binding != null) {
                             mAdapter = new TodoAdapter(todoData,
                                     getActivity());
                             binding.recyclerView.setAdapter(mAdapter);
@@ -84,15 +117,16 @@ public class FirstFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(this)
                 .get(MainViewModel.class);
-        mViewModel.mTodo.observe(requireActivity(), notesObserver);
+        mViewModel.mTodos.observe(requireActivity(), notesObserver);
     }
 
 
 
     private void initRecyclerView() {
-        binding.recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
+
+        layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setHasFixedSize(true);
 
         DividerItemDecoration divider = new DividerItemDecoration(
                 binding.recyclerView.getContext(), layoutManager.getOrientation());
