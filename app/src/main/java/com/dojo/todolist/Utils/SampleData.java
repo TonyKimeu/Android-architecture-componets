@@ -22,9 +22,9 @@ public class SampleData {
 
     public static List<TodoEntity> getTodos() {
         List<TodoEntity> notes = new ArrayList<>();
-        notes.add(new TodoEntity(SAMPLE_TODO_1,getDate(0),getDate(0),false));
-        notes.add(new TodoEntity(SAMPLE_TODO_2,getDate(0),getDate(0),false));
-        notes.add(new TodoEntity(SAMPLE_TODO_3,getDate(0),getDate(0),false));
+        notes.add(new TodoEntity(SAMPLE_TODO_1,getDate(0)));
+        notes.add(new TodoEntity(SAMPLE_TODO_2,getDate(0)));
+        notes.add(new TodoEntity(SAMPLE_TODO_3,getDate(0)));
         return notes;
     }
 }
