@@ -50,6 +50,17 @@ public class EditorViewModel extends AndroidViewModel {
         mRepository.insertTodo(todo);
     }
 
+    public void completeTodo() {
+        TodoEntity todo = mLiveTodo.getValue();
+        if(todo.getCompleted()){
+            todo.setCompleted(false);
+        } else {
+            todo.setCompleted(true);
+        }
+
+        mRepository.insertTodo(todo);
+    }
+
     public void deleteNote() {
         mRepository.deleteTodo(mLiveTodo.getValue());
     }

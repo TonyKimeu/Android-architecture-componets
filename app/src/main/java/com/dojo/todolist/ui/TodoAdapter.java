@@ -1,6 +1,8 @@
 package com.dojo.todolist.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +45,17 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull TodoAdapter.ViewHolder holder, int position) {
         final TodoEntity todo = mTodos.get(position);
         holder.todoListItemBinding.noteText.setText(todo.getTitle());
+        if(todo.getCompleted()){
+            holder.todoListItemBinding.checkbox.setChecked(true);
+            holder.todoListItemBinding.noteText.setPaintFlags(holder.todoListItemBinding.noteText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.todoListItemBinding.noteText.setTextColor(Color.GRAY);
+        } else {
+            holder.todoListItemBinding.checkbox.setChecked(false);
+        }
 
         holder.todoListItemBinding.cardTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Called", Toast.LENGTH_SHORT).show();
                 FirstFragmentDirections.ActionFirstFragmentToSecondFragment action =
                         FirstFragmentDirections.actionFirstFragmentToSecondFragment();
                 action.setId(todo.getId());
@@ -58,7 +66,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         holder.todoListItemBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Called", Toast.LENGTH_SHORT).show();
                 FirstFragmentDirections.ActionFirstFragmentToSecondFragment action =
                         FirstFragmentDirections.actionFirstFragmentToSecondFragment();
                 action.setId(todo.getId());

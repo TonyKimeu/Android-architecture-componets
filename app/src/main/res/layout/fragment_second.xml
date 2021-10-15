@@ -20,13 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:layout_marginTop="13dp">
+            <ImageButton
+                android:id="@+id/button_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check" />
             <ImageButton
                 android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check" />
+                android:src="@drawable/ic_save" />
             <ImageButton
                 android:id="@+id/button_delete"
                 android:layout_width="wrap_content"

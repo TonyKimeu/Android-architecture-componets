@@ -48,6 +48,12 @@ public class SecondFragment extends Fragment {
         }
         initViewModel(SecondFragmentArgs.fromBundle(getArguments()).getId());
 
+        binding.buttonComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                completeAndReturn();
+            }
+        });
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +80,11 @@ public class SecondFragment extends Fragment {
             public void onChanged(@Nullable TodoEntity noteEntity) {
                 if (noteEntity != null && !mEditing) {
                     binding.noteText.setText(noteEntity.getTitle());
+                    if(noteEntity.getCompleted()){
+                        binding.buttonComplete.setImageResource(R.drawable.ic_check_box_empty);
+                    } else {
+                        binding.buttonComplete.setImageResource(R.drawable.ic_check_box);
+                    }
                 }
             }
         });
@@ -87,7 +98,11 @@ public class SecondFragment extends Fragment {
             mViewModel.loadData(noteId);
         }
     }
-
+    private void completeAndReturn() {
+        mViewModel.completeTodo();
+        NavHostFragment.findNavController(SecondFragment.this)
+                .navigate(R.id.action_SecondFragment_to_FirstFragment);
+    }
 
     private void saveAndReturn() {
         mViewModel.saveNote(binding.noteText.getText().toString());
